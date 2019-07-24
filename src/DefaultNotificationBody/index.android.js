@@ -69,12 +69,33 @@ class DefaultNotificationBody extends React.Component {
     }
   }
 
+  renderIcon() {
+    const {
+      iconApp,
+      icon,
+    } = this.props;
+
+    if (icon) {
+      return (
+        <View style={styles.iconContainer}>
+          <Image source={icon} style={styles.icon} />
+        </View>
+      )
+    } else if (iconApp) {
+      return (
+        <View style={styles.iconContainer}>
+          <Image source={iconApp} style={styles.icon} />
+        </View>
+      )
+    }
+
+    return null;
+  }
+
   render() {
     const {
       title,
       message,
-      iconApp,
-      icon,
     } = this.props;
 
     return (
@@ -85,9 +106,7 @@ class DefaultNotificationBody extends React.Component {
           underlayColor="transparent"
           onPress={this.onNotificationPress}
         >
-          <View style={styles.iconContainer}>
-            {(icon || iconApp) && <Image source={icon || iconApp} style={styles.icon} />}
-          </View>
+          {this.renderIcon()}
           <View style={styles.textContainer}>
             <Text numberOfLines={1} style={styles.title}>{title}</Text>
             <Text numberOfLines={1} style={styles.message}>{message}</Text>
